@@ -12,43 +12,34 @@ int main(int argc, char *argv[])
   int fileDesc,n;
   char buf[N];
 
-
-
-  printf("HOLA MY CAT\n" );
-  // chek if argument number is correct
-  if(argc < 2){
-    printf("No arguments has been passed\n");
+  // chek if argument number is correct. if not, we end porcess by returning -1.
+  if(argc < 2)
+  {
+    printf("No file path nor file name has been passed\n");
     return -1;
   }
-
-  if ((fileDesc=open(argv[1],O_RDONLY,0666))<0) {
+  /* FLAG: O_RDONLY sisnce we're only gonna open the file to read it.
+    If we get a -1 as a file descriptor, we return a -1 to end the process and errno is set apropietly.
+  */
+  if ((fileDesc=open(argv[1],O_RDONLY))<0)
+  {
     perror("Error opening file");
-    return -1;
-  }else{
-    while ((n=read(fileDesc,buf,N))>0)
-      printf("%s \n",buf);
-      write(STDOUT_FILENO, buf, n);
-  }
-
-  printf("Argument number: %d\n",argc );
-  for(int i = 0; i< argc; i++)
-    printf("Argument: %s\n",argv[i]);
-  /*
-
-  if ((fileName=open("file_read.txt",O_CREAT|O_RDWR,0666))<0) {
-    perror("Error opening file");
-    exit(1);
-  }
-
-  while ((n=read(fd,buf,N))>0)
-    printf("Read from file character %c \n",buf[0]);
-
-  if (n<0) {
-    perror("Read error occured:");
     return -1;
   }
   else
-  */
+  {
+    while ((n=read(fileDesc,buf,N))>0)
+    {
+      write(STDOUT_FILENO, buf, n);
+      // if the numebr of bytes written is less than 0, an error is returned.
+      if (n<0)
+      {
+        perror("Read error occured:");
+        return -1;
+      }
+    }
+  }
+
     close(fileDesc);
 
 
