@@ -25,6 +25,4 @@ int main(int argc, char *argv[])
         printf("%s\n", d->d_name);
     }
   }
-
-
 }
