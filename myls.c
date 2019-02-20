@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
   DIR *dir;
   struct dirent *d;
-  int fileDesc;
+  //int fileDesc;
   char buf[PATH_MAX];
 
 
