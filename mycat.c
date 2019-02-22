@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     }
   }
 
-    close(fileDesc);
+  close(fileDesc);
 
 
   return 0;
