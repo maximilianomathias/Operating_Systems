@@ -12,25 +12,28 @@ int main(int argc, char *argv[])
   struct dirent *d;     // structure type to retain info about directories
   char buf[PATH_MAX];   // buffer for directory path
   int fd;               // filedescriptor
+  int fileSize;
+
 // Controls if the argumets passed are greater that 1
   if(argc > 1){
-    printf("NUmber or arguments esceeded");
+    printf("Number or arguments exceeded");
     return -1;
   }
 
   if(getcwd(buf, sizeof(buf))!=NULL){
-    printf("Current working directory: %s\n", buf);
 // loads the directory to the DIR pointer
-    if((dir = opendir(buf))!=NULL)
-    {
-      printf("despues de opendir\n");
+    if((dir = opendir(buf))!=NULL){
 // goes through the list of files until there is none
       while((d = readdir(dir))!=NULL){
-        printf("Dentro del bucle while\n");
-
         if(d->d_type == DT_REG){
-          printf("Es un archivo regular");
-          //fd = open(dir, O_RDONLY);
+          if((fd = open(d->d_name, O_RDONLY, 0666))<0){ // 0444?
+            perror("Error opening the file");
+            return -1;
+          }else{
+            fileSize = lseek(fd, 0, SEEK_END);
+            printf("%s\t%d\n", d->d_name, fileSize);
+            close(fd);
+          }
         }
       }
       closedir(dir);
@@ -39,4 +42,5 @@ int main(int argc, char *argv[])
   }else
     return -1;
 
+    return 0;
 }
