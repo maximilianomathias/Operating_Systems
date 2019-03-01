@@ -368,7 +368,8 @@ def testExerciseSIZE(folder):
 	result1 = subprocess.check_output("ls -lU1 | awk \'$2 == 1 {print $9\"\\t\"$5}\'", shell=True)
 
 	#Ejecutamos el programa del alumno
-	cmd = programPath
+	cmd = "../"+programPath 
+	print "Exec line= ", cmd
 	pro = subprocess.Popen(cmd, stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True, preexec_fn=os.setsid)  
 	time.sleep(0.5)
 	os.killpg(pro.pid, signal.SIGTERM) 
@@ -404,6 +405,7 @@ def testExerciseSIZE(folder):
         result1 = subprocess.check_output("ls -lU1 | awk \'$2 == 1 {print $9\"\\t\"$5}\'", shell=True)
         #Ejecutamos el programa del alumno
         cmd = "../"+programFile
+	print "Exec line= ", cmd
         pro = subprocess.Popen(cmd, stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True, preexec_fn=os.setsid)
         time.sleep(0.5)
         os.killpg(pro.pid, signal.SIGTERM)
@@ -469,11 +471,11 @@ if(__name__=="__main__"):
 		print "CORRECTOR: NIA 1",u1, "NIA 2", u2, "NIA 3", u3
 		
 		#Preparamos la carpeta temporal donde se realizaran las pruebas
-		tempFolder="/tmp/ssoo/"
+		tempFolder="./tmp/"
 		testFile="f_aes.txt"
 		if os.path.exists(tempFolder):
 			subprocess.call(["rm", "-r",tempFolder])
-		os.mkdir(tempFolder)
+                os.mkdir(tempFolder)
 		os.mkdir(tempFolder+"dirC")
 		os.mkdir(tempFolder+"dirA")
 		subprocess.call(["touch",tempFolder+"f_empty.txt"])		
@@ -506,7 +508,7 @@ if(__name__=="__main__"):
 		global resultString
 		print(resultString) 
 
-		subprocess.call(["rm","-r","/tmp/ssoo"])
+		#subprocess.call(["rm","-r","./tmp"])
 
 
 
