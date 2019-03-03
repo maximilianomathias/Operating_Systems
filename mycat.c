@@ -30,8 +30,9 @@ int main(int argc, char *argv[])
   {
     while ((n=read(fileDesc,buf,N))>0)
     {
-      // we write in teh console the data from the file
+      // we write in the console the data from the file
       write(STDOUT_FILENO, buf, n);
+
       // if the numebr of bytes written is -1, an error is returned and errno is set.
       if (n<0)
       {
